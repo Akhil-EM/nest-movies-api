@@ -8,46 +8,44 @@ import {
   Length,
   ForeignKey,
   BelongsTo,
+  DataType,
 } from 'sequelize-typescript';
-import { UserType } from './user-type.entity';
+import { TokenType } from './token-type.entity';
+import { User } from './user.entity';
 @Table({ tableName: 'tokens' })
-export class User extends Model<User> {
+export class Token extends Model<Token> {
   @Column({
     allowNull: false,
     autoIncrement: true,
     unique: true,
     primaryKey: true,
   })
-  public user_id: number;
+  public token_id: number;
 
-  @IsEmail
-  @Column({
-    allowNull: false,
-    unique: true,
-  })
-  user_email: string;
-
-  @Length({ min: 5 })
-  @Column({
-    allowNull: false,
-  })
-  user_password: string;
-
-  @ForeignKey(() => UserType)
+  @ForeignKey(() => User)
   @Column({
     allowNull: false,
   })
   user_id: number;
 
+  @ForeignKey(() => TokenType)
   @Column({
     allowNull: false,
-    defaultValue: true,
   })
-  user_active: boolean;
-  @CreatedAt public user_created_at: Date;
+  token_type_id: number;
 
-  @UpdatedAt public user_updated_at: Date;
+  @Column({
+    allowNull: false,
+    type: DataType.STRING(500),
+  })
+  token: string;
+  @CreatedAt public token_created_at: Date;
 
-  @BelongsTo(() => UserType)
-  userType: UserType;
+  @UpdatedAt public token_updated_at: Date;
+
+  @BelongsTo(() => User)
+  user: User;
+
+  @BelongsTo(() => TokenType)
+  tokenType: TokenType;
 }

@@ -6,9 +6,10 @@ import {
   UpdatedAt,
   IsEmail,
   Length,
-  ForeignKey,
   BelongsTo,
+  ForeignKey,
 } from 'sequelize-typescript';
+import { User } from './user.entity';
 @Table({ tableName: 'movies' })
 export class Movie extends Model<Movie> {
   @Column({
@@ -19,28 +20,37 @@ export class Movie extends Model<Movie> {
   })
   public movie_id: number;
 
-  @IsEmail
-  @Column({
-    allowNull: false,
-    unique: true,
-  })
-  user_email: string;
-
-  @Length({ min: 5 })
+  @ForeignKey(() => User)
   @Column({
     allowNull: false,
   })
-  user_password: string;
+  user_type_id: number;
 
   @Column({
     allowNull: false,
-    defaultValue: true,
   })
-  user_active: boolean;
+  movie_title: string;
+
+  @Column({
+    allowNull: false,
+  })
+  movie_director: string;
+
+  @Column({
+    allowNull: false,
+  })
+  movie_release_date: Date;
+
+  @Column({
+    allowNull: false,
+    type: 'FLOAT',
+  })
+  movie_rating: Date;
+
   @CreatedAt public user_created_at: Date;
 
   @UpdatedAt public user_updated_at: Date;
 
-  @BelongsTo(() => UserType)
-  userType: UserType;
+  @BelongsTo(() => User)
+  user: User;
 }

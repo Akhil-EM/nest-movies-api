@@ -10,6 +10,7 @@ import {
   BelongsTo,
   HasMany,
 } from 'sequelize-typescript';
+import { Movie } from './movie.entity';
 import { Token } from './token.entity';
 import { UserType } from './user-type.entity';
 @Table({ tableName: 'users' })
@@ -35,6 +36,12 @@ export class User extends Model<User> {
   })
   user_password: string;
 
+  @Length({ min: 3 })
+  @Column({
+    allowNull: false,
+  })
+  name: string;
+
   @ForeignKey(() => UserType)
   @Column({
     allowNull: false,
@@ -55,4 +62,7 @@ export class User extends Model<User> {
 
   @HasMany(() => Token)
   token: Token;
+
+  @HasMany(() => Movie)
+  movie: Movie;
 }

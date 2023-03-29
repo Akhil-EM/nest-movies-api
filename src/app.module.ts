@@ -4,9 +4,11 @@ import { AppController } from './app.controller';
 import { DatabaseModule } from './common/database/database.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { UsersModule } from './resources/users/users.module';
+import { Resources\moviesModule } from './resources/movies/resources/movies.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, UsersModule, Resources\moviesModule],
   controllers: [AppController],
   providers: [
     {

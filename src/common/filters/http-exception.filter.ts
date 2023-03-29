@@ -11,10 +11,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
+
     const status = exception.getStatus();
     const method = request.method;
-
-    if (status === 500) {
+    if (status === 500 || status === 403) {
       //handle internal server error
       return response.status(status).json({
         statusCode: status,
@@ -22,21 +22,12 @@ export class HttpExceptionFilter implements ExceptionFilter {
         timeStamp: new Date(),
         error: [exception.message],
       });
-    }
-
-    if (method === 'PATCH' || method === 'PUT') {
-      response.status(status).json({
-        statusCode: status,
-        success: false,
-        timeStamp: new Date(),
-        error: [exception.response],
-      });
     } else {
       response.status(status).json({
         statusCode: status,
         success: false,
         timeStamp: new Date(),
-        error: [exception.response.message],
+        error: [exception.response],
       });
     }
   }
