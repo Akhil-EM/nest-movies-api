@@ -11,6 +11,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
+    console.log(exception);
 
     const status = exception.getStatus();
     const method = request.method;
@@ -21,6 +22,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
         success: false,
         timeStamp: new Date(),
         error: [exception.message],
+      });
+    } else if (status === 400) {
+      return response.status(status).json({
+        statusCode: status,
+        success: false,
+        timeStamp: new Date(),
+        error: [exception.response.message],
       });
     } else {
       response.status(status).json({

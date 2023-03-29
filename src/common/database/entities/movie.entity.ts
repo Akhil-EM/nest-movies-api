@@ -24,7 +24,7 @@ export class Movie extends Model<Movie> {
   @Column({
     allowNull: false,
   })
-  user_type_id: number;
+  user_id: number;
 
   @Column({
     allowNull: false,
@@ -39,17 +39,17 @@ export class Movie extends Model<Movie> {
   @Column({
     allowNull: false,
   })
-  movie_release_date: Date;
+  movie_release_date: string;
 
   @Column({
     allowNull: false,
     type: 'FLOAT',
   })
-  movie_rating: Date;
+  movie_rating: number;
 
-  @CreatedAt public user_created_at: Date;
+  @CreatedAt public movie_created_at: Date;
 
-  @UpdatedAt public user_updated_at: Date;
+  @UpdatedAt public movie_updated_at: Date;
 
   @BelongsTo(() => User)
   user: User;
