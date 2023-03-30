@@ -13,7 +13,7 @@ import { Request } from 'express';
 import { MoviesService } from './movies.service';
 import { MovieDto } from './dto/movie.dto';
 import { AuthGuard } from 'src/common/guards/auth.guard';
-import { ApiTags, ApiOkResponse, ApiBadRequestResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOkResponse, ApiBadRequestResponse, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('movies')
 @UseGuards(AuthGuard)
@@ -31,14 +31,17 @@ export class MoviesController {
       "rating must be a number conforming to the specified constraints"
       ]`,
   })
+  @ApiBearerAuth('access-token')
   @Post()
   create(@Body() movie: MovieDto, @Req() request: Request | any) {
     return this.moviesService.create(movie, request.user.userId);
   }
 
+  @ApiBearerAuth('access-token')
   @ApiOkResponse({
     description: 'array containing list of movies',
   })
+  @ApiBearerAuth('access-token')
   @Get()
   findAll() {
     return this.moviesService.findAll();
@@ -47,6 +50,7 @@ export class MoviesController {
   @ApiOkResponse({
     description: 'object containing movie',
   })
+  @ApiBearerAuth('access-token')
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.moviesService.findOne(+id);
@@ -55,6 +59,7 @@ export class MoviesController {
   @ApiOkResponse({
     description: 'movie updated',
   })
+  @ApiBearerAuth('access-token')
   @Patch(':id')
   update(@Param('id') id: string, @Body() movie: MovieDto) {
     return this.moviesService.update(+id, movie);
@@ -63,6 +68,7 @@ export class MoviesController {
   @ApiOkResponse({
     description: 'movie deleted',
   })
+  @ApiBearerAuth('access-token')
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.moviesService.remove(+id);
