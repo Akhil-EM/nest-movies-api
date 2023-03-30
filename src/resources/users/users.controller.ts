@@ -51,7 +51,7 @@ export class UsersController {
   @ApiForbiddenResponse({
     description: '"Forbidden resource" issue with access token',
   })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @UseGuards(AuthGuard)
   @Delete('logout')
   logout(@Req() req: Request | any) {

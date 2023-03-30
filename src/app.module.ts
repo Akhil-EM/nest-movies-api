@@ -6,9 +6,10 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { UsersModule } from './resources/users/users.module';
 import { MoviesModule } from './resources/movies/movies.module';
+import { PostModule } from './resources/post/post.module';
 
 @Module({
-  imports: [DatabaseModule, UsersModule, MoviesModule],
+  imports: [DatabaseModule, UsersModule, MoviesModule, PostModule],
   controllers: [AppController],
   providers: [
     {
