@@ -49,5 +49,6 @@ Start the server again
 ```bash
   npm run start
 ```
+server will be running on **http://localhost:3000**
 
 for api documentation [click here](http://localhost:3000/documentation) 
